@@ -1,4 +1,4 @@
-import firebase from "src\config\firebase.js";
+import firebase from "../config/firebase";
 
 const addUser = (data)=>{
     return(dispatch)=>{
@@ -295,7 +295,7 @@ const get_message = (chat_id, chattingWith)  =>{
                 this_user_chat.push(datareturned[item]);
             }
             if(this_user_chat.length > 0){
-                dispatch({ type: "FRIENDSCHAT", DATA:{chat: this_user_chat, chattingwith: chattingwith}});
+                dispatch({ type: "FRIENDSCHAT", DATA:{chat: this_user_chat, chattingWith: chattingWith}});
             }
             else {
                 dispatch({ type: "FRIENDSCHAT"})
@@ -338,14 +338,11 @@ const remove_alert = () =>{
 
 export {
     addUser,
-    facebook_login,
-    google_login,
     create_user,
     login_user,
     sign_out,
     show_alert,
     remove_alert,
-    get_users_friends,
     search_friends,
     invite_friend,
     get_invitation,
