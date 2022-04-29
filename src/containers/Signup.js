@@ -1,10 +1,15 @@
 import React from 'react';
-import logo from '../assets/logo.svg'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { create_user, show_alert, remove_alert } from "../store/Action";
-import { Navigate } from 'react-router-dom'
 
+import logo from '../assets/logo.svg'
+
+import create_user from "../store/Action"
+import show_alert from "../store/Action"
+import remove_alert from "../store/Action"
+
+import { Router } from 'react-router-dom'
+import "./signup.css";
 import AlertHelper from './alerts/alerthelper'
 
 class Signup extends React.Component{
@@ -14,7 +19,7 @@ class Signup extends React.Component{
             email: '',
             password:'',
             loggenin: false,
-            Navigate: ''
+            Router: ''
         }
     }
 
@@ -59,11 +64,11 @@ class Signup extends React.Component{
         }
     }
 
-    componentDidMount(){
+    elementDidMount(){
         this.timerId = setInterval(() => this.redirect_to_messages(), 3000)
     }
 
-    componentWillUnmount() {
+    elementWillUnmount() {
         clearInterval(this.timerID);
     }
 
@@ -71,7 +76,7 @@ class Signup extends React.Component{
         if(this.props.login.length > 0){
             this.setState({
                 loggedin: true,
-                Navigate: "/message"
+                Router: "/message"
             });
 
             this.props.remove_alert();
@@ -86,12 +91,12 @@ class Signup extends React.Component{
 
         return(
             <div className="w-xl w-auto-sm mx-auto py-5">
-                {this.state.loggedin ? <Navigate push to={this.state.redirect}/> : ""}
+                {this.state.loggedin ? <Router push to={this.state.redirect}/> : ""}
                 <div className="p-4 d-flex flex-column">
                     {/* brand */} 
                     <div className="navbar-brand d-inline align-self-center" style={{display: "block"}}>                    
                         <img src={logo} alt="..." width="56" height="39" className="Mini-App-logo"/>
-                        <span className="hidden-folded d-inline l-s-n-1x align-self-center" style={{color: "#61dafb"}}>Chattery</span> 
+                        <span className="hidden-folded d-inline l-s-n-1x align-self-center" style={{color: "#61dafb"}}>React Chat App</span> 
                     </div>
                     {/* / brand */}
                 </div>

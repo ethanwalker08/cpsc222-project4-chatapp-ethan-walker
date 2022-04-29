@@ -1,10 +1,14 @@
 import React from "react";
-import logo from '../assets/logo.svg';
 import { Link } from 'react-router-dom';
 import {connect} from "react-redux";
-import {login_user, show_alert, remove_alert} from "../store/Action";
-import { Navigate } from 'react-router-dom';
 
+import logo from '../assets/logo.svg'
+import login_user from "../store/Action"
+import show_alert from "../store/Action"
+import remove_alert from "../store/Action"
+
+import { Router } from 'react-router-dom';
+import "./signin.css";
 import AlertHelper from './alerts/alerthelper';
 
 import $ from 'jquery';
@@ -68,11 +72,11 @@ class Signin extends React.Component{
         }
     }
 
-    componentDidMount() {
+    elementDidMount() {
         this.timerID = setInterval(() => this.redirect_to_messages(),3000);
     }
 
-    componentWillUnmount() {
+    elementWillUnmount() {
         clearInterval(this.timerID);
     }
 
@@ -109,7 +113,7 @@ class Signin extends React.Component{
         }
         return(            
             <div className="w-xl w-auto-sm mx-auto py-5">
-                {this.state.loggedin ? <Navigate push to={this.state.redirect}/> : ""}
+                {this.state.loggedin ? <Router push to={this.state.redirect}/> : ""}
                 <div className="p-4 d-flex flex-column">
                     {/* brand */}
                     <div className="navbar-brand d-inline align-self-center" style={{display: "block"}}>                    
@@ -140,7 +144,6 @@ class Signin extends React.Component{
                         </div>
                     </div>
                 </div>
-                <div className="text-center text-muted" style={{display: "none"}}>© Copyright. LionCreativeDev</div>
             </div>
         )
     }

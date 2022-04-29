@@ -4,15 +4,15 @@ import Signin from "./containers/Signin";
 import Signup from "./containers/Signup";
 import Message from "./containers/messages";
 
-import {  Route, Routes } from 'react-router-dom';
+import {  Route, Switch } from 'react-router-dom';
 
 function App() {
   return (
-    <Routes>
+    <Switch>
         <Route path="/" component={Signin} exact />
         <Route path="/signup" component={Signup} />
         <Route path="/message" component={Message} />
-      </Routes>
+    </Switch>
   );
 }
 
