@@ -8,7 +8,7 @@ import create_user from "../store/Action"
 import show_alert from "../store/Action"
 import remove_alert from "../store/Action"
 
-import { Router } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import "./signup.css";
 import AlertHelper from './alerts/alerthelper'
 
@@ -16,21 +16,28 @@ class Signup extends React.Component{
     constructor(){
         super();
         this.state ={
-            email: '',
-            password:'',
-            loggenin: false,
-            Router: ''
+          email: '',
+          password: '',
+          loggedin: false,
+          redirect: ''
         }
     }
-
     handle_email = (e) => {
-        this.setState({email: e.target.value});
+        if (e.keyCode === 13)
+        {
+            const passwordField = document.querySelector(`input[name=password]`);
+            passwordField.focus();
+        }
+        else{
+            this.setState({email: e.target.value});
+        }
     }
-
     handle_password = (e) => {
-        this.setState({password: e.target.value});
+        if (e.keyCode === 13) 
+            this.handle_loginwithemailandpassword();
+        else
+            this.setState({password: e.target.value});
     }
-
     vaidate_email = (input) => {
         var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
         if (!pattern.test(input))
@@ -38,60 +45,67 @@ class Signup extends React.Component{
         else
             return true;
     }
-
     handle_signupwithemailandpassword = () => {
-        if(this.props.login.length === 0){       
+        //this.hide_alert();
+        if(this.props.login.length === 0)
+        {       
             let email = this.state.email.trim();
             let password = this.state.password.trim();
             
-            if((email !== '' && this.vaidate_email(email)) && password !== ''){
+            if((email !== '' && this.vaidate_email(email)) && password !== '')
+            {
                 this.props.create_user(email, password);
             }
-            else{
+            else
+            {
                 if(email === '' && password === ''){
-                    this.props.show_alert("fail","Please provide email and password to create account");
+                    document.querySelector(`input[name=email]`).focus();
+                    this.props.show_alert("fail","Please provide email and password to create account");//this.setState({ alertmessage: {type: "fail", message: "Please provide email and password to create account"} });
                 }
                 else if (email === ''){
-                this.props.show_alert("fail","Please provide email to create account");
+                    document.querySelector(`input[name=email]`).focus();
+                    this.props.show_alert("fail","Please provide email to create account");//this.setState({ alertmessage: {type: "fail", message: "Please provide email to create account"} });
                 }
                 else if (password === ''){
-                    this.props.show_alert("fail","Please provide password to create account");
+                    document.querySelector(`input[name=password]`).focus();
+                    this.props.show_alert("fail","Please provide password to create account");//this.setState({ alertmessage: {type: "fail", message: "Please provide password to create account"} });
                 }
                 else if(!this.vaidate_email(email)){
-                    this.props.show_alert("fail","Please provide valid email create account");
+                    document.querySelector(`input[name=email]`).focus();
+                    this.props.show_alert("fail","Please provide valid email create account");//this.setState({ alertmessage: {type: "fail", message: "Please provide valid email create account"} });
                 }
             }
         }
     }
-
-    elementDidMount(){
-        this.timerId = setInterval(() => this.redirect_to_messages(), 3000)
+    componentDidMount() {
+        this.timerID = setInterval(() => this.redirect_to_messages(),3000);
     }
-
-    elementWillUnmount() {
+    componentWillUnmount() {
         clearInterval(this.timerID);
     }
-
     redirect_to_messages() {
         if(this.props.login.length > 0){
             this.setState({
                 loggedin: true,
-                Router: "/message"
+                redirect: "/message"
             });
 
             this.props.remove_alert();
         }
     }
-
+    // hide_alert()
+    // {
+    //     this.props.remove_alert();
+    // }
     render(){
+
         let showalert = false;
-        if(this.props.alerts.length > 0){
-            showalert = true;
-        }
+        if(this.props.alerts.length > 0)
+            showalert=true;
 
         return(
             <div className="w-xl w-auto-sm mx-auto py-5">
-                {this.state.loggedin ? <Router push to={this.state.redirect}/> : ""}
+                {this.state.loggedin ? <Redirect push to={this.state.redirect}/> : ""}
                 <div className="p-4 d-flex flex-column">
                     {/* brand */} 
                     <div className="navbar-brand d-inline align-self-center" style={{display: "block"}}>                    
@@ -105,14 +119,14 @@ class Signup extends React.Component{
                     <div id="content-body">
                         <div className="p-3 p-md-5">
                             <h5>Welcome</h5>
-                            <p><small className="text-muted">Sign up</small></p>
+                            <p><small className="text-muted">Sign up to manage enjoy</small></p>
                             
-                                <div className="form-group"><label>Email</label><input type="email" className="form-control" placeholder="Enter email" name="email" onChange={this.handle_email} value={this.state.email}/></div>
+                                <div className="form-group"><label>Email</label><input type="email" className="form-control" placeholder="Enter email" name="email" onKeyDown={this.handle_password} onChange={this.handle_email} value={this.state.email}/></div>
                                 <div className="form-group">
-                                    <label>Password</label><input type="password" className="form-control" placeholder="Password" name="password" onChange={this.handle_password} value={this.state.password}/>
-                                    {}
+                                    <label>Password</label><input type="password" className="form-control" placeholder="Password" name="password" onKeyDown={this.handle_password} onChange={this.handle_password} value={this.state.password}/>
+                                    {/**<div className="my-3 text-right"><a href="forgot-password.html" className="text-muted" data-pjax-state>Forgot password?</a></div>**/}
                                 </div>
-                                {}
+                                {/**<div className="checkbox mb-3"><label className="ui-check"><input type="checkbox" /><i /> Remember me</label></div>**/}
                                 <button onClick={this.handle_signupwithemailandpassword} className="btn btn-primary mb-1">Sign up</button>
                                 <div>Already have an account? <Link to="/" className="text-primary">Sign in</Link></div>
                             
