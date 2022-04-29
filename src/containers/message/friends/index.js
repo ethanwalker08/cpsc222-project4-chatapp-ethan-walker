@@ -1,9 +1,10 @@
 import React from 'react';
 
 import {connect} from "react-redux";
+import {get_users_friends, get_message} from "../../../store/action";
+import friend_image from '../../../assets/friend.png';
 
-import get_users_friends from "../../store/Action"
-import get_message from "../../store/Action"
+//import firebase from "../../../config/firebase";
 
 class Friends extends React.Component{
     constructor()
@@ -52,10 +53,12 @@ class Friends extends React.Component{
                     <div className="list list-row" style={{height:'100%'}}>
                         {this.props.friends.filter(o => Object.keys(o).some(k => o[k].includes(this.state.search.toLowerCase()))).map((v,i)=>{
                             return (v.uid !== this.props.login.uid && ( <div className={v.uid === this.props.chattingwith.uid ? "list-item activechat" : "list-item" } onClick={()=>{ this.chat(v) }} key={i}>
+                                    {/**<div><span className="w-40 avatar gd-primary"><img src="../assets/img/a1.jpg" alt="." /></span></div>**/}
                                     {(v.hasOwnProperty('profile') && v.profile !== null && v.profile !== "") ? <span className="avatar w-40 gd-primary friendprofileimage" style={{padding:0}}><img src={v.profile} alt={v.name+" profile"} /></span> : <span className="avatar w-40 gd-success friendprofileimage" style={{padding:0}}>{v.name[0].toUpperCase()}</span> }
                                     <div className="friendloginstatus"><span className={v.status === "login" ? "avatar-status on" : "avatar-status off"} /></div>
                                     <div className="flex" style={{padding:"0"}}>
                                         <div className="item-author text-color">{v.name}</div>
+                                        {/**<div className="item-except text-muted text-sm h-1x">In WordPress Tutorial, we’ll streamline the process for you by pointing out the all key features of the WordPress</div>**/}
                                     </div>
                                     <div />
                                 </div>))
@@ -66,6 +69,7 @@ class Friends extends React.Component{
                         <div className="p-4 text-center"><b>No Friend</b></div>
                     </div>
                     <div className="no-result" style={{position:'absolute', top: '50%', left:'25%'}}>
+                        <img src={friend_image} style={{width: '100px', marginLeft:'5px'}} alt=""/>
                         <div className="p-4 text-center"><b>No Friend</b></div>
                     </div>
                     </React.Fragment>

@@ -1,10 +1,10 @@
 import React from 'react';
-import {connect} from "react-redux";
-import get_invitation from "../../store/Action"
-import search_friends from "../../store/Action"
-import invite_friend from "../../store/Action"
 
-import AlertHelper from '../alerts/alerthelper';
+import {connect} from "react-redux";
+import {get_invitation, search_friends, invite_friend} from "../../../store/action";
+
+import searched_contact_image from '../../../assets/searched_contact_image.png';
+import AlertHelper from '../../alerts/alerthelper';
 
 class Contacts extends React.Component{
     constructor()
@@ -20,7 +20,8 @@ class Contacts extends React.Component{
         }
     }
     alreadyInvited(uid) {
-
+ 
+        
         return this.props.sent_invitation.some(function(el) {
           return (el.uid === uid) ? true : false;
         }); 
@@ -28,11 +29,9 @@ class Contacts extends React.Component{
     handle_input = (e) => {
         let query = e.target.value;
         this.setState({search: query});
-
-
         this.props.search_friends(query, this.props.login.uid);
     }
-    elementDidMount()
+    componentDidMount()
     {
         this.props.get_invitation(this.props.login.uid);
     }
@@ -64,7 +63,6 @@ class Contacts extends React.Component{
         if(this.state.alerts.type !== "")
             showalert=true;
 
- 
         return(
             <React.Fragment>
                 <div className="navbar">
@@ -101,6 +99,7 @@ class Contacts extends React.Component{
                     })}
                 </div>) :
                 <div className="no-result" style={{position:'absolute', top: '50%', left:'25%'}}>
+                    <img src={searched_contact_image} style={{marginLeft:'5px'}} alt=""/>
                     <div className="p-4 text-center"><b>Search Contacts</b></div>
                 </div>
                 }

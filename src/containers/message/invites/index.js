@@ -1,12 +1,10 @@
 import React from 'react';
 
-
+import firend_invitation_image from '../../../assets/firend_invitation_image.png';
 import {connect} from "react-redux";
-import accept_invitation from "../../store/Action"
-import reject_invitation from "../../store/Action"
+import {accept_invitation, reject_invitation} from "../../../store/action";
 
 class Invites extends React.Component{
-
     constructor()
     {
         super();
@@ -27,31 +25,10 @@ class Invites extends React.Component{
         console.log("accept_invite clicked===>", invitation_key);
     }
     reject_invite(v){
-        //console.log("reject_invite clicked===>", v.invitation_key);
         this.props.reject_invitation(v.invitation_key);
         console.log("reject_invitation clicked===>", v.invitation_key);
     }
-    // elementDidMount(){
-    //     if(this.props.login !== null)
-    //         this.props.get_invitation(this.props.login.uid);
 
-    //     let thiscontext = this;
-    //     var originalSetItem = localStorage.setItem; 
-    //     localStorage.setItem = function(){
-    //         document.createEvent('Event').initEvent('itemInserted', true, true);
-    //         originalSetItem.apply(this, arguments);
-
-    //         if(localStorage.getItem('received_invitation') !== null)
-    //         {
-    //             let received_invitation = JSON.parse(localStorage.getItem('received_invitation'));
-    //             thiscontext.setState({ received_invitation: received_invitation });
-
-    //             setTimeout(()=>{
-    //                 localStorage.removeItem('received_invitation');
-    //             }, 100);
-    //         }
-    //     }
-    // }
     render(){
         return (
             <React.Fragment>
@@ -81,7 +58,6 @@ class Invites extends React.Component{
                                     <div className="item-author text-color">{v.name}</div>
                                 </div>
                                 <div style={{left:'0', padding:'0'}}>
-                                    {/**<button className="btn btn-raised btn-wave w-xs blue text-white" onClick={()=>{ this.props.invite_friend({sender:this.props.login.uid, receiver: v.uid}) }}>Invite</button>**/}
                                     <button className="btn btn-raised btn-wave btn-icon btn-rounded mb-2 green text-white"  onClick={()=>{ this.accept_invite(v.uid, this.props.login.uid, v.invitation_key) }}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="feather feather-check"> <polyline points="20 6 9 17 4 12" /></svg>
                                     </button>
@@ -94,6 +70,7 @@ class Invites extends React.Component{
                     })}
                 </div>) :
                 <div className="no-result" style={{position:'absolute', top: '50%', left:'25%'}}>
+                    <img src={firend_invitation_image} style={{marginLeft:'5px'}} alt=""/>
                     <div className="p-4 text-center"><b>No Invitations</b></div>
                 </div>
                 }
@@ -107,10 +84,8 @@ const mapStateToProp = (state) => ({
     received_invitation: state.received_invitation
 })
 const mapDispatchToProp = (dispatch) => ({
-    //get_invitation: (uid)=> dispatch(get_invitation(uid)),
     accept_invitation: (inviter, invited, invitation_key)=> dispatch(accept_invitation(inviter, invited, invitation_key)),
     reject_invitation: (invitation_key)=> dispatch(reject_invitation(invitation_key))
 })
 
-//export default Invites;
 export default connect(mapStateToProp, mapDispatchToProp)(Invites);

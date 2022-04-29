@@ -1,26 +1,17 @@
 import React from "react";
+import logo from '../../assets/logo.svg';
+import './style.css';
 import { Link } from 'react-router-dom';
 import {connect} from "react-redux";
-
-import logo from '../assets/logo.svg'
-import login_user from "../store/Action"
-import show_alert from "../store/Action"
-import remove_alert from "../store/Action"
-
+import { create_user, show_alert, remove_alert} from "../../store/action";
 import { Redirect } from 'react-router-dom';
-import "./signin.css";
-import AlertHelper from './alerts/alerthelper';
 
-import $ from 'jquery';
+import AlertHelper from '../alerts/alerthelper';
 
-window.$ = window.jQuery = require('jquery');
-
-
-
-class Signin extends React.Component{
+class Signup extends React.Component{
     constructor(){
         super();
-        this.state ={          
+        this.state ={
           email: '',
           password: '',
           loggedin: false,
@@ -34,7 +25,7 @@ class Signin extends React.Component{
             passwordField.focus();
         }
         else{
-            this.setState({email: e.target.value});        
+            this.setState({email: e.target.value});
         }
     }
     handle_password = (e) => {
@@ -50,34 +41,33 @@ class Signin extends React.Component{
         else
             return true;
     }
-    handle_loginwithemailandpassword = () => {
-        //this.hide_alert();
+    handle_signupwithemailandpassword = () => {
         if(this.props.login.length === 0)
-        {
+        {       
             let email = this.state.email.trim();
             let password = this.state.password.trim();
             
             if((email !== '' && this.vaidate_email(email)) && password !== '')
             {
-                this.props.login_user(email, password);
+                this.props.create_user(email, password);
             }
             else
             {
                 if(email === '' && password === ''){
                     document.querySelector(`input[name=email]`).focus();
-                    this.props.show_alert("fail","Please provide email and password to login");//this.setState({ alertmessage: {type: "fail", message: "Please provide email and password to login"} });
+                    this.props.show_alert("fail","Please provide email and password to create account");
                 }
                 else if (email === ''){
                     document.querySelector(`input[name=email]`).focus();
-                    this.props.show_alert("fail","Please provide email to login");//this.setState({ alertmessage: {type: "fail", message: "Please provide email to login"} });
+                    this.props.show_alert("fail","Please provide email to create account");
                 }
                 else if (password === ''){
                     document.querySelector(`input[name=password]`).focus();
-                    this.props.show_alert("fail","Please provide password to login");//this.setState({ alertmessage: {type: "fail", message: "Please provide password to login"} });
+                    this.props.show_alert("fail","Please provide password to create account");
                 }
                 else if(!this.vaidate_email(email)){
                     document.querySelector(`input[name=email]`).focus();
-                    this.props.show_alert("fail","Please provide valid email address");//this.setState({ alertmessage: {type: "fail", message: "Please provide valid email address"} });
+                    this.props.show_alert("fail","Please provide valid email create account");
                 }
             }
         }
@@ -97,26 +87,10 @@ class Signin extends React.Component{
 
             this.props.remove_alert();
         }
-        else
-        {            
-            $("img").stop(true, true).delay(100).animate({
-                top: '0px',
-                opacity: '1',
-                height: '50px',
-                width: '50px'
-            }, 1000);
-
-            $('.loading').fadeOut(4000).remove();
-            
-            $('.formbox').show();
-            $('.name').show(1000);
-        }
     }
-    // hide_alert()
-    // {
-    //     this.props.remove_alert();
-    // }
+
     render(){
+
         let showalert = false;
         if(this.props.alerts.length > 0)
             showalert=true;
@@ -125,29 +99,26 @@ class Signin extends React.Component{
             <div className="w-xl w-auto-sm mx-auto py-5">
                 {this.state.loggedin ? <Redirect push to={this.state.redirect}/> : ""}
                 <div className="p-4 d-flex flex-column">
-                    {/* brand */}
+                    {/* brand */} 
                     <div className="navbar-brand d-inline align-self-center" style={{display: "block"}}>                    
-                        <img src={logo} alt="..." width="200" height="200" style={{animation: 'App-logo-spin infinite 20s linear'}}/>
-                        <span className="hidden-folded l-s-n-1x align-self-center name" style={{display: "none", color: "#61dafb"}}>React Chat App</span> 
+                        <img src={logo} alt="..." width="56" height="39" className="Mini-App-logo"/>
+                        <span className="hidden-folded d-inline l-s-n-1x align-self-center" style={{color: "#61dafb"}}>React Chat App</span> 
                     </div>
                     {/* / brand */}
                 </div>
-                <span className="p-4 d-flex flex-column text-center align-self-center loading" style={{color: "#61dafb"}}><h1>React Chat App</h1></span> 
-                <div className="card mx-2 formbox" style={{display: "none"}}>
+                <div className="card mx-2">
                     { showalert ? <AlertHelper type={this.props.alerts[0].type} message={this.props.alerts[0].message}/> : ""}
                     <div id="content-body">
                         <div className="p-3 p-md-5">
                             <h5>Welcome</h5>
-                            <p><small className="text-muted">Login to manage your account</small></p>
+                            <p><small className="text-muted">Sign up to manage enjoy</small></p>
                             
-                                <div className="form-group"><label>Email</label><input type="email" className="form-control" placeholder="Enter email" name="email" onKeyDown={this.handle_email} onChange={this.handle_email} value={this.state.email}/></div>
+                                <div className="form-group"><label>Email</label><input type="email" className="form-control" placeholder="Enter email" name="email" onKeyDown={this.handle_password} onChange={this.handle_email} value={this.state.email}/></div>
                                 <div className="form-group">
                                     <label>Password</label><input type="password" className="form-control" placeholder="Password" name="password" onKeyDown={this.handle_password} onChange={this.handle_password} value={this.state.password}/>
-                                    {/**<div className="my-3 text-right"><a href="forgot-password.html" className="text-muted" data-pjax-state>Forgot password?</a></div>**/}
                                 </div>
-                                {/**<div className="checkbox mb-3"><label className="ui-check"><input type="checkbox" /><i /> Remember me</label></div>**/}
-                                <button onClick={this.handle_loginwithemailandpassword} className="btn btn-primary mb-1">Sign in</button>
-                                <div>Do not have an account? <Link to="/signup" className="text-primary">Sign up</Link></div>
+                                <button onClick={this.handle_signupwithemailandpassword} className="btn btn-primary mb-1">Sign up</button>
+                                <div>Already have an account? <Link to="/" className="text-primary">Sign in</Link></div>
                             
                         </div>
                     </div>
@@ -162,10 +133,9 @@ const mapStateToProp = (state) => ({
     alerts: state.alerts
 })
 const mapDispatchToProp = (dispatch) => ({
-    login_user: (email, password)=> dispatch(login_user(email, password)),
+    create_user: (email, password)=> dispatch(create_user(email, password)),
     show_alert: (alerttype, alertmessage)=> dispatch(show_alert(alerttype, alertmessage)),
     remove_alert: ()=> dispatch(remove_alert())
 })
 
-//export default Signin;
-export default connect(mapStateToProp, mapDispatchToProp)(Signin);
+export default connect(mapStateToProp, mapDispatchToProp)(Signup);

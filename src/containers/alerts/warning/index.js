@@ -1,19 +1,20 @@
-import React from 'react';
+import React from "react";
+import "./style.css";
 import $ from 'jquery';
 
 window.$ = window.jQuery = require('jquery');
 
-class Success extends React.Component{
-    elementDidMount() {
+class Warning extends React.Component{
+    componentDidMount() {
         $(".close").on("click", function(){
             $(this).parent().remove();
         });
     }
     render(){
-        return(<div className="alert alert-success alert-dismissible fade show m-2" role="alert">
+        return(<div className="alert alert-warning alert-dismissible fade show m-2" role="alert">
                 <div className="d-flex">
                     {/**<span className="w-40 avatar circle gd-info">G</span>**/}
-                    <div className="mx-3"><strong>Success!</strong> { this.props.message }</div>
+                    <div className="mx-3"><strong>Warning!</strong> { this.props.message }</div>
                 </div>
                 <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
@@ -23,4 +24,4 @@ class Success extends React.Component{
 }
 
 
-export default Success;
+export default Warning;

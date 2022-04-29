@@ -1,8 +1,9 @@
+
 import './App.css';
 
-import Signin from "./containers/Signin";
-import Signup from "./containers/Signup";
-import Message from "./containers/messages";
+import Signin from "./containers/signin";
+import Signup from "./containers/signup";
+import Message from "./containers/message";
 
 import {  Route, Switch } from 'react-router-dom';
 
@@ -12,7 +13,7 @@ function App() {
         <Route path="/" component={Signin} exact />
         <Route path="/signup" component={Signup} />
         <Route path="/message" component={Message} />
-    </Switch>
+      </Switch>
   );
 }
 

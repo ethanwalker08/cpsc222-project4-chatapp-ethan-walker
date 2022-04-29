@@ -1,9 +1,10 @@
 import React from 'react';
-import logo from '../../assets/logo.svg'
-import {connect} from "react-redux";
-import sign_out from "../../store/Action"
+import logo from '../../../assets/logo.svg';
 
-import './header.css';
+import {connect} from "react-redux";
+import {sign_out} from "../../../store/action";
+
+import './style.css';
 
 class Header extends React.Component{
     render()
@@ -11,7 +12,7 @@ class Header extends React.Component{
         return (
             <div id="header" className="page-header bg-body sticky" data-class="bg-body">
                 <div className="navbar navbar-expand-lg">
-                    {/* brand */}
+                    {/* brand */} 
                     <div className="navbar-brand">
                         <img src={logo} alt="React Chat App Logo" width="56" height="39" className="mini-logo"/> <span className="hidden-folded d-inline l-s-n-1x" style={{color: "#61dafb"}}>React Chat App</span> 
                     </div>
@@ -34,8 +35,10 @@ class Header extends React.Component{
     } 
 }
 
+
 const mapDispatchToProp = (dispatch) => ({
     sign_out: (data)=> dispatch(sign_out(data))
 })
+
 
 export default connect(null, mapDispatchToProp)(Header);

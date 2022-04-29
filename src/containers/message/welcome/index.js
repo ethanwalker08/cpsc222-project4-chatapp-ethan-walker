@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {connect} from "react-redux";
-import set_status_message from "../../store/Action";
+import {set_status_message} from "../../../store/action";
 
 class Welcome extends React.Component{
     constructor()
@@ -73,11 +73,10 @@ class Welcome extends React.Component{
             </div>
         )
     }
-    mapDispatchToProp = (dispatch) => ({
-        set_status_message: (uid, status_message)=> dispatch(set_status_message(uid, status_message))
-    })
 }
 
+const mapDispatchToProp = (dispatch) => ({
+    set_status_message: (uid, status_message)=> dispatch(set_status_message(uid, status_message))
+})
 
-
-export default Welcome;
+export default connect(null, mapDispatchToProp)(Welcome);

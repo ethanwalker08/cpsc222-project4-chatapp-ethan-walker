@@ -2,19 +2,17 @@ import React from "react";
 import './style.css';
 
 import {connect} from "react-redux";
-import get_users_friends from "../../store/Action"
-import { Router } from 'react-router-dom';
-import logo from '../../assets/logo.svg'
+import {get_users_friends} from "../../store/action";
+import { Redirect } from 'react-router-dom';
 
-import Header from './header';
-import NavMini from './nav-mini';
-import Friends from './friends';
-import Contacts from './contacts';
-import Invites from './invites';
-import Welcome from './welcome';
-import Chatbox from './chatbox';
-import Emptychat from './emptychat';
-
+import Header from '../message/header';
+import NavMini from '../message/nav-mini';
+import Friends from '../message/friends';
+import Contacts from '../message/contacts';
+import Invites from '../message/invites';
+import Welcome from '../message/welcome';
+import Chatbox from '../message/chatbox';
+import Emptychat from '../message/emptychat';
 
 import $ from 'jquery';
 
@@ -29,7 +27,7 @@ class Message extends React.Component{
             message: ''
         }
     }    
-    elementDidMount() {
+    componentDidMount() {
         if(this.props.login.length > 0)
             this.props.get_users_friends(this.props.login[0].uid);
             
@@ -73,20 +71,22 @@ class Message extends React.Component{
             $(".tab-pane").hide().removeClass("show active");
             $("#invites").show().addClass("show active");
         })
+
     }
     render(){
         let loggedin = (this.props.login.length > 0) ? true : false;
         let redirect = "/";
+
         return(
             <div className="layout-row">
-                {!loggedin ? <Router to={redirect}/> : ""}
+                {!loggedin ? <Redirect to={redirect}/> : ""}
                 { loggedin && (
                 <div id="main" className="layout-column flex">
                     <Header login={this.props.login[0]}/>
 
-                    {/* ############ Content START*/}
+                    {/*  Content START*/}
                     <div id="content" className="flex">
-                    {/* ############ Main START*/}
+                    {/*  Main START*/}
                     <div className="d-flex flex fixed-content">
                         <div className="aside aside-sm" id="content-aside">
                             <div className="d-flex flex-column w-xl modal-dialog bg-body" id="chat-nav">
@@ -135,7 +135,6 @@ class Message extends React.Component{
                         </div>
                     </div>
                     </div>
-
                 </div>
                 )
                 }

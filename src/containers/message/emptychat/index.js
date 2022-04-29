@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {connect} from "react-redux";
-import send_message from "../../store/Action"
+import {send_message} from "../../../store/action";
 
 class Emptychat extends React.Component{
     constructor()
@@ -39,7 +39,6 @@ class Emptychat extends React.Component{
         return(
             <div className="mt-auto b-t" id="chat-form">
                 <div className="p-2">
-                    
                     <div className="input-group">
                         <input type="text" className="form-control p-3 no-shadow no-border" placeholder="Say something" id="newField" value={this.state.message} onKeyDown={this.handle_message} onChange={this.handle_message} /> 
                         <button className="btn btn-icon btn-rounded gd-success" type="button" id="newBtn" onClick={ ()=>{this.send_message()} }>

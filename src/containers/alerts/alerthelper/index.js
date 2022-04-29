@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Success from './success';
-import Fail from './fail';
-import Info from './info';
-import Warning from './warning';
+import Success from '../success';
+import Fail from '../fail';
+import Info from '../info';
+import Warning from '../warning';
 
 class AlertHelper extends React.Component{
     render(){
