@@ -1,7 +1,5 @@
 import React from 'react';
 
-import './style.css';
-
 class NavMini extends React.Component{
     render(){
         return(
@@ -40,7 +38,6 @@ class NavMini extends React.Component{
                             <div style={{paddingLeft:".5rem"}}>
                                 <h5 className="mt-2">{this.props.login.name}</h5>
                                 <div className="text-fade text-sm"><span className="m-r">{this.props.login.status_message != "" ? this.props.login.status_message : "You can provide your status message here!"}</span>
-                                {/**<small><i className="fa fa-map-marker mr-2" />London, UK</small>**/}
                                 </div>
                             </div>
                         </div>

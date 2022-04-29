@@ -3,9 +3,12 @@ import "firebase/auth";
 import "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBbjyE_iOR5HSlOvw9hY6fpb5-MiYzdZqI",
-  authDomain: "chat-bot-e978e.firebaseapp.com",
-  databaseURL: "https://chat-bot-e978e-default-rtdb.firebaseio.com",
+  apiKey: "AIzaSyDAsKkBPQTGk-eyiaqMBkNh3XpLBkI9nw4",
+  authDomain: "cpsc222-project4.firebaseapp.com",
+  projectId: "cpsc222-project4",
+  storageBucket: "cpsc222-project4.appspot.com",
+  messagingSenderId: "282983387502",
+  appId: "1:282983387502:web:2df273d5c74f021c25317f"
 };
 
 firebase.initializeApp(firebaseConfig);

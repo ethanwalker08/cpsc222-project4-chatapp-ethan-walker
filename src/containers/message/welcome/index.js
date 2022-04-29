@@ -60,10 +60,6 @@ class Welcome extends React.Component{
                                 </button>
                             </div>
                             )}
-
-                            <div className="py-4">
-                                <button className="btn btn-sm btn-rounded btn-raised btn-wave btn-primary">Invite Friends</button>
-                            </div>
                         </div>
                     </div>
                 </div>
